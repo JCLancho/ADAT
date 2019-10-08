@@ -89,7 +89,7 @@ class gestionarCSV:
         sport = input("Introduce el deporte")
         event = input("Introduce el evento")
         medal = input("Introduce la medalla")
-        with open('athlete_events.csv', 'w+') as escritura:
+        with open('athlete_events.csv', 'w') as escritura:
             fieldnames = ["ID", "Name", "Sex", "Age", "Height",
                           "Weight", "Team", "NOC", "Games",
                           "Year", "Season", "City", "Sport", "Event", "Medal"]
