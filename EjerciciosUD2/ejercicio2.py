@@ -28,7 +28,7 @@ class gestionarCSV:
 
     def buscarDeportista(self):
         cadena = input("¿Qué nombre desea buscar?")
-        with open('athlete_events.csv', 'w+') as lectura:
+        with open('athlete_events.csv') as lectura:
             reader = csv.DictReader(lectura)
             deportistasCumplenPatron = []
             deportistasMostrados = []
@@ -75,27 +75,26 @@ class gestionarCSV:
                 print("Ningun deportista encontrado")
 
     def aniadirDeportista(self):
-        nombre = input("Introduce el nombre")
-        sexo = input("Introduce el sexo")
-        edad = input("Introduce la edad")
-        height = input("Introduce la altura")
-        weight = input("Introduce el peso")
-        team = input("Introduce el equipo")
-        noc = input("Introduce el NOC")
-        games = input("Introduce los juegos")
-        year = input("Introduce el año")
-        season = input("Introduce la estacion")
-        city = input("Introduce la ciudad")
-        sport = input("Introduce el deporte")
-        event = input("Introduce el evento")
-        medal = input("Introduce la medalla")
-        with open('athlete_events.csv', 'w') as escritura:
+        nombre = input("Introduce el nombre ")
+        sexo = input("Introduce el sexo ")
+        edad = input("Introduce la edad ")
+        height = input("Introduce la altura ")
+        weight = input("Introduce el peso ")
+        team = input("Introduce el equipo ")
+        noc = input("Introduce el NOC ")
+        games = input("Introduce los juegos ")
+        year = input("Introduce el año ")
+        season = input("Introduce la estacion ")
+        city = input("Introduce la ciudad ")
+        sport = input("Introduce el deporte ")
+        event = input("Introduce el evento ")
+        medal = input("Introduce la medalla ")
+        with open('athlete_events.csv', 'a', newline='') as escritura:
             fieldnames = ["ID", "Name", "Sex", "Age", "Height",
                           "Weight", "Team", "NOC", "Games",
                           "Year", "Season", "City", "Sport", "Event", "Medal"]
             writer = csv.DictWriter(escritura, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerow({"ID": 135572,
+            writer.writerow({"ID": "1",
                              "Name": nombre,
                              "Sex": sexo,
                              "Age": edad,
@@ -110,6 +109,7 @@ class gestionarCSV:
                              "Sport": sport,
                              "Event": event,
                              "Medal": medal})
+            print("Deportista añadido")
 
 
 gestor = gestionarCSV()
