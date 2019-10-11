@@ -91,8 +91,8 @@ class gestionarCSV:
         medal = input("Introduce la medalla ")
         with open('athlete_events.csv', 'a', newline='') as escritura:
             fieldnames = ["ID", "Name", "Sex", "Age", "Height",
-                          "Weight", "Team", "NOC", "Games",
-                          "Year", "Season", "City", "Sport", "Event", "Medal"]
+                          "Weight", "Team", "NOC", "Games", "Year",
+                          "Season", "City", "Sport", "Event", "Medal"]
             writer = csv.DictWriter(escritura, fieldnames=fieldnames)
             writer.writerow({"ID": "1",
                              "Name": nombre,
