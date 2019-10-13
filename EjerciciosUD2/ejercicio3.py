@@ -1,5 +1,6 @@
 import csv
-
+import xml.sax
+from ClaseSax import ClaseSax
 from lxml import etree as tree
 
 class gestorXML:
@@ -32,15 +33,58 @@ class gestorXML:
             ciudad = tree.SubElement(olimpiada, "ciudad")
             ciudad.text = row["City"]
 
-        xml = tree.ElementTree(olimpiadas)
-        xml.write("olimpiadas.xml")
-        #print(tree.tostring(olimpiadas, pretty_print=True))
+        with open("olimpiadas.xml", "w+") as xml:
+            arbolXML = tree.tostring(olimpiadas, pretty_print=True, xml_declaration='utf-8')
+            xml.write(arbolXML.decode('utf-8'))
+
+        print("Archivo creado")
 
     def crearXMLDeportistas(self):
-        pass
+        with open("athlete_events.csv") as lectura:
+            reader = csv.DictReader(lectura)
+            deportistas = tree.Element("deportistas")
+            coleccionIDs = set()
+            deporteActual = ""
+            for row in reader:
+                if not (coleccionIDs.__contains__(row["ID"])):
+                    deportista = tree.SubElement(deportistas, "deportista")
+                    deportista.set("id", row["ID"])
+                    nombre = tree.SubElement(deportista, "nombre")
+                    nombre.text = row["Name"]
+                    sexo = tree.SubElement(deportista, "sexo")
+                    sexo.text = row["Sex"]
+                    altura = tree.SubElement(deportista, "altura")
+                    altura.text = row["Height"]
+                    peso = tree.SubElement(deportista, "peso")
+                    peso.text = row["Weight"]
+                    coleccionIDs.add(row["ID"])
+                    participaciones = tree.SubElement(deportista, "participaciones")
+
+                if not (row["Sport"] == deporteActual):
+                    deporte = tree.SubElement(participaciones, "deporte")
+                    deporte.set("nombre", row["Sport"])
+                    deporteActual = row["Sport"]
+
+                participacion = tree.SubElement(deporte, "participacion")
+                equipo = tree.SubElement(participacion, "equipo")
+                equipo.text = row["Team"]
+                juegos = tree.SubElement(participacion, "juegos")
+                juegos.text = row["Games"] + " - " + row["City"]
+                evento = tree.SubElement(participacion, "evento")
+                evento.text = row["Event"]
+                medalla = tree.SubElement(participacion, "medalla")
+                medalla.text = row["Medal"]
+
+        with open("deportistas.xml", "w+") as xml:
+            arbolXML = tree.tostring(deportistas, pretty_print=True, xml_declaration='utf-8')
+            xml.write(arbolXML.decode('utf-8'))
+
+        print("Archivo creado")
 
     def listarOlimpiadas(self):
-        pass
+        source = open("olimpiadas.xml")
+        xml.sax.parse(source, ClaseSax())
+        source.close()
 
 
 gestor = gestorXML()
