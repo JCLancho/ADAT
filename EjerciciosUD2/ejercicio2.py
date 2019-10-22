@@ -19,7 +19,7 @@ class gestionarCSV:
                 fieldnames = ['Games', 'Year', 'Season', 'City']
                 writer = csv.DictWriter(escritura, fieldnames=fieldnames)
                 writer.writeheader()
-                for row in reader:
+                for row in reader: #quitar repes
                     writer.writerow({'Games': row["Games"],
                                      "Year": row["Year"],
                                      "Season": row["Season"],
