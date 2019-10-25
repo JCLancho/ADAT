@@ -123,8 +123,8 @@ class GameOfThrones:
             anio = element[1].text
             region = element[2].text
             localizacion = element[3].text
-            rey_atacante = element[4].text
-            rey_defensor = element[5].text
+            rey_atacante = element[4][0].text
+            rey_defensor = element[5][0].text
             gana_atacante = element[4].attrib["gana"]
             batalla = Batalla(id, nombre, anio, region, localizacion, rey_atacante, rey_defensor, gana_atacante)
             arrayBatallas.append(batalla)
