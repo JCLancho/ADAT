@@ -2,7 +2,7 @@
 <project version="4">
   <component name="DBNavigator.Project.DataEditorManager">
     <record-view-column-sorting-type value="BY_INDEX" />
-    <value-preview-text-wrapping value="true" />
+    <value-preview-text-wrapping value="false" />
     <value-preview-pinned value="false" />
   </component>
   <component name="DBNavigator.Project.DataExportManager">
@@ -25,7 +25,7 @@
     <show-object-properties value="true" />
     <loaded-nodes>
       <connection connection-id="c3e14b37-ef4a-4c76-93a0-da9e7833fb90">
-        <schema name="OLIMPIADAS" object-types="table" />
+        <schema name="OLIMPIADAS" object-types="view, function, dataset trigger, table, constraint, index, procedure, column" />
       </connection>
     </loaded-nodes>
   </component>
@@ -42,6 +42,9 @@
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
+  </component>
+  <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/EjerciciosUD3/olimpiadas.sql" connection-id="" session-id="MAIN" current-schema="" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
