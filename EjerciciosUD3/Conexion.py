@@ -1,7 +1,6 @@
 import mysql.connector
 from mysql.connector import Error, cursor
 
-
 class Conexion:
 
     def __init__(self):
@@ -48,19 +47,22 @@ class Conexion:
             print("Error while connecting to MySQL", e)
 
     def crearTablas(self):
-        with open("athlete_events-sort.csv", 'r') as sql:
-            sqlCommands = sql.split(';')
-            for command in sqlCommands:
-                try:
-                    self.cursor.execute(command)
-                except Error as e:
-                    print("Command skipped: " + e)
+        file = open("olimpiadas.sql")
+        sql = file.read()
+        resultSet = self.cursor.execute(sql, multi=True)
+        for rs in resultSet:
+            if rs.with_rows:
+                self.cursor.fetchall()
+        self.connection.commit()
+
 
     def cerrar(self):
         if self.connection.is_connected():
             self.cursor.close()
             self.connection.close()
             print("MySQL connection is closed")
+
+
 
     # def __init__(self):
     #     try:
