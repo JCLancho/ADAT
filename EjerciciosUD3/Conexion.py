@@ -1,6 +1,7 @@
 import mysql.connector
 from mysql.connector import Error, cursor
 
+
 class Conexion:
 
     def __init__(self):
