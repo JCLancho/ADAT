@@ -17,6 +17,10 @@ class Olimpiadas:
 
     def crearBbddMySql(self):
         c = Conexion()
+        if c.existeBBDD():
+            c.borrarBBDD()
+        c.crearBBDD()
+        c.cerrar()
 
     def crearBbddSqlite(self):
         pass
