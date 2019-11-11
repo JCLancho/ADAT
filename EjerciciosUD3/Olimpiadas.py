@@ -20,6 +20,7 @@ class Olimpiadas:
         if c.existeBBDD():
             c.borrarBBDD()
         c.crearBBDD()
+        # input()
         c.cerrar()
 
     def crearBbddSqlite(self):
