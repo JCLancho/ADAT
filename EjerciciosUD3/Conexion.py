@@ -7,8 +7,12 @@ from mysql.connector import Error, cursor
 class Conexion:
 
     insertDeportista = "INSERT INTO Deportista (id_deportista,nombre,sexo,peso,altura) VALUES (%s,%s,%s,%s,%s)"
-    insertDeporte = "INSERT INTO Deporte (nombre) VALUES (%s)"
-    insertEquipo = "INSERT INTO Equipo (nombre, iniciales) VALUES (%s,%s)"
+    insertDeporte = "INSERT INTO Deporte (id_deporte, nombre) VALUES (%s,%s)"
+    insertEquipo = "INSERT INTO Equipo (id_equipo, nombre, iniciales) VALUES (%s,%s,%s)"
+    insertOlimpiada = "INSERT INTO Olimpiada (id_olimpiada, nombre, anio, temporada, ciudad) VALUES (%s,%s,%s,%s,%s)"
+    inserEvento = "INSERT INTO Evento (id_evento, nombre, id_olimpiada, id_deporte) VALUES (%s,%s,%s,%s)"
+    insertParticipacion = "INSERT INTO Participacion (id_deportista, id_evento, id_equipo, edad, medalla) " \
+                          "VALUES (%s,%s,%s,%s,%s)"
 
     def __init__(self):
         try:
@@ -75,20 +79,58 @@ class Conexion:
         print("cargar colecciones personalizadas")
         deportistas = []
         ids = []
+        aiDeportes = 1
+        deportesDistintos = []
+        dicDeportes = {}
         deportes = []
+        aiEquipos = 1
         nocs = []
-        equipo = []
+        equipos = []
+        dicEquipos = {}
+        olimpiada = []
+        olimpiadasDistintas = []
+        aiOlimpiadas = 1
+        dicOlimpiadas = {}
+        eventosDistintos = []
+        eventos = []
+        aiEventos = 1
+        dicEventos = {}
+        participacionesDistintas = []
+        participaciones = []
         for row in olimpiadas:
             if row["ID"] not in ids:
                 ids.append(row["ID"])
                 deportistas.append([row["ID"], row["Name"], row["Sex"], row["Weight"], row["Height"]])
 
-            if [row["Sport"]] not in deportes:
-                deportes.append([row["Sport"]])
+            if row["Sport"] not in deportesDistintos:
+                deportesDistintos.append(row["Sport"])
+                deportes.append([aiDeportes, row["Sport"]])
+                dicDeportes.setdefault(row["Sport"], aiDeportes)
+                aiDeportes += 1
 
             if row["NOC"] not in nocs:
                 nocs.append(row["NOC"])
-                equipo.append([row["Team"], row["NOC"]])
+                equipos.append([aiEquipos, row["Team"], row["NOC"]])
+                dicEquipos.setdefault(row["NOC"], aiEquipos)
+                aiEquipos += 1
+
+            if row["Games"] not in olimpiadasDistintas:
+                olimpiadasDistintas.append(row["Games"])
+                olimpiada.append([aiOlimpiadas, row["Games"], row["Year"], row["Season"], row["City"]])
+                dicOlimpiadas.setdefault(row["Games"], aiOlimpiadas)
+                aiOlimpiadas += 1
+
+            if [row["Event"], row["Games"]] not in eventosDistintos:
+                eventosDistintos.append([row["Event"], row["Games"]])
+                eventos.append([aiEventos, row["Event"], dicOlimpiadas.get(row["Games"]), dicDeportes.get(row["Sport"])])
+                dicEventos.setdefault(row["Event"], aiEventos)
+                aiEventos += 1
+
+            # if [row["ID"], dicEventos.get(row["Event"])] not in participacionesDistintas:
+            #     participacionesDistintas.append([row["ID"], dicEventos.get(row["Event"])])
+            participaciones.append([row["ID"], dicEventos.get(row["Event"]), dicEquipos.get(row["NOC"]), row["Age"], row["Medal"]])
+
+
         print("insertar")
         self.cursor.executemany(self.insertDeportista, deportistas)
         self.connection.commit()
@@ -96,9 +138,18 @@ class Conexion:
         self.cursor.executemany(self.insertDeporte, deportes)
         self.connection.commit()
         print("deportes cargados")
-        self.cursor.executemany(self.insertEquipo, equipo)
+        self.cursor.executemany(self.insertEquipo, equipos)
         self.connection.commit()
         print("equipos cargados")
+        self.cursor.executemany(self.insertOlimpiada, olimpiada)
+        self.connection.commit()
+        print("olimpiadas cargadas")
+        self.cursor.executemany(self.inserEvento, eventos)
+        self.connection.commit()
+        print("eventos cargadas")
+        self.cursor.executemany(self.insertParticipacion, participaciones)
+        self.connection.commit()
+        print("participaciones cargadas")
 
 
     def cerrar(self):
