@@ -95,7 +95,6 @@ class Conexion:
         eventos = []
         aiEventos = 1
         dicEventos = {}
-        participacionesDistintas = []
         participaciones = []
         for row in olimpiadas:
             if row["ID"] not in ids:
@@ -123,12 +122,12 @@ class Conexion:
             if [row["Event"], row["Games"]] not in eventosDistintos:
                 eventosDistintos.append([row["Event"], row["Games"]])
                 eventos.append([aiEventos, row["Event"], dicOlimpiadas.get(row["Games"]), dicDeportes.get(row["Sport"])])
-                dicEventos.setdefault(row["Event"], aiEventos)
+                dicEventos.setdefault(tuple([row["Event"], dicOlimpiadas.get(row["Games"]), dicDeportes.get(row["Sport"])]), aiEventos)
                 aiEventos += 1
 
-            # if [row["ID"], dicEventos.get(row["Event"])] not in participacionesDistintas:
-            #     participacionesDistintas.append([row["ID"], dicEventos.get(row["Event"])])
-            participaciones.append([row["ID"], dicEventos.get(row["Event"]), dicEquipos.get(row["NOC"]), row["Age"], row["Medal"]])
+            participaciones.append([row["ID"],
+                dicEventos.get(tuple([row["Event"], dicOlimpiadas.get(row["Games"]), dicDeportes.get(row["Sport"])])),
+                dicEquipos.get(row["NOC"]), row["Age"], row["Medal"]])
 
 
         print("insertar")
