@@ -10,6 +10,6 @@ while lista.__len__() < 3:
 
 print(lista.__str__())
 
-print("La suma es",sum(lista))
+print("La suma es", sum(lista))
 
-print("La media es",sum(lista)/lista.__len__())
+print("La media es", sum(lista)/lista.__len__())
