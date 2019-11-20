@@ -1,5 +1,4 @@
 import csv
-
 import mysql.connector
 from mysql.connector import Error, cursor
 
