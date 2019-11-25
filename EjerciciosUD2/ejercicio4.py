@@ -1,6 +1,7 @@
 import lxml.etree as lxmlET
 import pickle
 
+
 #crearemos objetos olimpiada segun los leemos del xml
 class Olimpiada:
 

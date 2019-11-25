@@ -20,20 +20,29 @@ class Olimpiadas:
         if c.existeBBDD():
             c.borrarBBDD()
         c.crearBBDD()
-        # input()
+        c.crearTablas()
         c.cerrar()
 
     def crearBbddSqlite(self):
         pass
 
     def listadoDeportistasDiferentes(self):
-        pass
+        c = Conexion()
+        c.conectarBBDD()
+        c.listarDeportistasDiferentesDeportes()
+        c.cerrar()
 
     def listadoDeportistasParticipantes(self):
-        pass
+        c = Conexion()
+        c.conectarBBDD()
+        c.listarDeportistasFiltro()
+        c.cerrar()
 
     def modificarMedallaDeportista(self):
-        pass
+        c = Conexion()
+        c.conectarBBDD()
+        c.modificarMedalla()
+        c.cerrar()
 
     def anadirDeportistaParticipacion(self):
         pass
