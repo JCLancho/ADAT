@@ -1,3 +1,6 @@
+from EjerciciosUD4.Conexion import Conexion
+
+
 class Orm:
 
     menu = """
@@ -13,7 +16,9 @@ class Orm:
         pass
 
     def listadoDeportistasParticipantes(self):
-        pass
+        print("1")
+        c = Conexion()
+        c.close()
 
     def modificarMedallaDeportista(self):
         pass
@@ -33,6 +38,7 @@ options = {"1": o.listadoDeportistasParticipantes,
            }
 opcion = input(o.menu)
 while opcion != "0":
+    print("m")
     try:
         options[opcion]()
     except KeyError:

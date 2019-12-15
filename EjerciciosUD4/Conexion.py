@@ -2,7 +2,8 @@ import csv
 
 import mysql.connector
 from mysql.connector import Error
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
+import sqlalchemy.dialects.mysql
 
 
 class Conexion:
@@ -77,19 +78,29 @@ ORDER BY de.id_deportista, o.anio"""
 
     def __init__(self):
 
-        engine = create_engine("mysql://scott:tiger@localhost/test")
+        engine = create_engine("MySQLdb://dm2:dm2@localhost/olimpiadas", echo = True)
 
+        conn = engine.connect()
 
+        # select = deporte.select()
+        select = text("SELECT * FROM DEPORTE")
 
-        try:
-            self.connection = mysql.connector.connect(host='localhost',
-                                                 user='dm2',
-                                                 password='dm2')
-            if self.connection.is_connected():
-                self.cursor = self.connection.cursor()
-                print("MySQL connection is open")
-        except Error as e:
-            print("Error while connecting to MySQL", e)
+        result = conn.execute(select)
+        print(result)
+        for row in result:
+            print(row)
+
+        conn.close()
+
+        # try:
+        #     self.connection = mysql.connector.connect(host='localhost',
+        #                                          user='dm2',
+        #                                          password='dm2')
+        #     if self.connection.is_connected():
+        #         self.cursor = self.connection.cursor()
+        #         print("MySQL connection is open")
+        # except Error as e:
+        #     print("Error while connecting to MySQL", e)
 
     def existeBBDD(self):
         encontrado = False
