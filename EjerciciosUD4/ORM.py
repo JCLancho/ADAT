@@ -12,13 +12,9 @@ class Orm:
         0.- Salir
         """
 
-    def listadoDeportistasDiferentes(self):
-        pass
-
     def listadoDeportistasParticipantes(self):
-        print("1")
         c = Conexion()
-        c.close()
+        c.menu1()
 
     def modificarMedallaDeportista(self):
         pass
@@ -38,7 +34,6 @@ options = {"1": o.listadoDeportistasParticipantes,
            }
 opcion = input(o.menu)
 while opcion != "0":
-    print("m")
     try:
         options[opcion]()
     except KeyError:

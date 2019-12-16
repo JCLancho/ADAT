@@ -1,5 +1,5 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Integer, String, Column, Enum
+from sqlalchemy import Integer, String, Column, Enum, ForeignKey
 Base = declarative_base()
 
 
@@ -13,7 +13,7 @@ class Deportista(Base):
     __tablename__ = 'Deportista'
     id_deportista = Column(Integer, primary_key=True)
     nombre = Column(String)
-    sexo = Column(Enum)
+    sexo = Column(Enum('M', 'F'))
     peso = Column(Integer)
     altura = Column(Integer)
 
@@ -29,8 +29,8 @@ class Evento(Base):
     __tablename__ = 'Evento'
     id_evento = Column(Integer, primary_key=True)
     nombre = Column(String)
-    id_olimpiada = Column(Integer)
-    id_deporte = Column(Integer)
+    id_olimpiada = Column(Integer, ForeignKey('Olimpiada.id_olimpiada'))
+    id_deporte = Column(Integer, ForeignKey('Deporte.id_deporte'))
 
 
 class Olimpiada(Base):
@@ -38,15 +38,15 @@ class Olimpiada(Base):
     id_olimpiada = Column(Integer, primary_key=True)
     nombre = Column(String)
     anio = Column(Integer)
-    temporada = Column(Enum)
+    temporada = Column(Enum('Summer', 'Winter'))
     ciudad = Column(String)
 
 
 class Participacion(Base):
     __tablename__ = 'Participacion'
-    id_deportista = Column(Integer, primary_key=True)
-    id_evento = Column(Integer, primary_key=True)
-    id_equipo = Column(Integer)
+    id_deportista = Column(Integer, ForeignKey('Deportista.id_deportista'), primary_key=True)
+    id_evento = Column(Integer, ForeignKey('Evento.id_evento'), primary_key=True)
+    id_equipo = Column(Integer, ForeignKey('Equipo.id_equipo'))
     edad = Column(Integer)
     medalla = Column(String)
 
