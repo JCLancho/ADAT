@@ -11,7 +11,7 @@ class Conexion:
 
     def menu1(self):
         temporada = input("Selecciona la temporada Winter o Summer (W/S)")
-        if temporada== 'W':
+        if temporada == 'W':
             temporada = "Winter"
         elif temporada == 'S':
             temporada = "Summer"
@@ -21,10 +21,37 @@ class Conexion:
         for row in result:
             print(row.id_olimpiada, row.nombre)
 
-        edicionOlimpica = input("Introduce el codigo de la edición olimpica que desea")
-        result = session.query(Evento).filter(Evento.id_olimpiada == edicionOlimpica)
+        idOlimpiada = input("Introduce el codigo de la edición olimpica que desea")
+        nombreOlimpiada = (session.query(Olimpiada.nombre).filter(Olimpiada.id_olimpiada == idOlimpiada).one())[0]
+
+        result = session.query(Deporte).filter(Deporte.id_deporte == Evento.id_deporte, Evento.id_olimpiada == idOlimpiada)
         for row in result:
-            print(row.id_olimpiada, row.nombre)
+            print(row.id_deporte, row.nombre)
+
+        idDeporte = input("Introduce el codigo del deporte seleccionado")
+        nombreDeporte = (session.query(Deporte.nombre).filter(Deporte.id_deporte == idDeporte).one())[0]
+
+        result = session.query(Evento).filter(Evento.id_deporte == idDeporte, Evento.id_olimpiada == idOlimpiada)
+        for row in result:
+            print(row.id_evento, row.nombre)
+
+        idEvento = input("Introduce el codigo del evento seleccionado")
+        nombreEvento = (session.query(Evento.nombre).filter(Evento.id_evento == idEvento).one())[0]
+
+        print("""Resumen:
+            Temporada: %s
+            Edición olimpica: %s
+            Deporte: %s
+            Evento: %s""" % (temporada, nombreOlimpiada, nombreDeporte, nombreEvento))
+
+        print("Deportistas participantes:")
+        result = session.query(Deportista, Participacion, Equipo).filter(Participacion.id_evento == Evento.id_evento,
+                                                                         Participacion.id_deportista == Deportista.id_deportista,
+                                                                         Participacion.id_equipo == Equipo.id_equipo)
+        for deportista, participacion, equipo in result:
+            print("\t", deportista.nombre, deportista.altura, deportista.peso,
+                  participacion.edad, participacion.medalla, equipo.nombre)
+
 
         session.close()
 
