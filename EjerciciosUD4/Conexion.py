@@ -44,14 +44,16 @@ class Conexion:
             Deporte: %s
             Evento: %s""" % (temporada, nombreOlimpiada, nombreDeporte, nombreEvento))
 
-        print("Deportistas participantes:")
         result = session.query(Deportista, Participacion, Equipo).filter(Participacion.id_evento == Evento.id_evento,
                                                                          Participacion.id_deportista == Deportista.id_deportista,
-                                                                         Participacion.id_equipo == Equipo.id_equipo)
+                                                                         Participacion.id_equipo == Equipo.id_equipo,
+                                                                         Evento.id_evento == idEvento,
+                                                                         Evento.id_deporte == idDeporte,
+                                                                         Evento.id_olimpiada == idOlimpiada)
+        print("Deportistas participantes:")
         for deportista, participacion, equipo in result:
             print("\t", deportista.nombre, deportista.altura, deportista.peso,
                   participacion.edad, participacion.medalla, equipo.nombre)
-
 
         session.close()
 

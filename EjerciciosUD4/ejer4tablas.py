@@ -5,6 +5,7 @@ from sqlalchemy.orm import relationship
 engine = create_engine('sqlite:///database.db')
 Base = declarative_base()
 
+
 class Olimpiada(Base):
     __tablename__ = 'Olimpiada'
     id_olimpiada = Column(Integer, primary_key=True)
