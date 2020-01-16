@@ -49,5 +49,3 @@ class Participacion(Base):
     id_equipo = Column(Integer, ForeignKey('Equipo.id_equipo'))
     edad = Column(Integer)
     medalla = Column(String)
-
-
