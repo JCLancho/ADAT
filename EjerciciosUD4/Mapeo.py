@@ -1,5 +1,6 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Integer, String, Column, Enum, ForeignKey
+from sqlalchemy.orm import relationship
 Base = declarative_base()
 
 
@@ -31,6 +32,8 @@ class Evento(Base):
     nombre = Column(String)
     id_olimpiada = Column(Integer, ForeignKey('Olimpiada.id_olimpiada'))
     id_deporte = Column(Integer, ForeignKey('Deporte.id_deporte'))
+    Olimpiada = relationship("Olimpiada", back_populates="Evento")
+    Deporte = relationship("Deporte", back_populates="Evento")
 
 
 class Olimpiada(Base):
@@ -49,3 +52,13 @@ class Participacion(Base):
     id_equipo = Column(Integer, ForeignKey('Equipo.id_equipo'))
     edad = Column(Integer)
     medalla = Column(String)
+    Deportista = relationship("Deportista", back_populates="Participacion")
+    Evento = relationship("Evento", back_populates="Participacion")
+    Equipo = relationship("Equipo", back_populates="Participacion")
+
+
+Olimpiada.Evento = relationship("Evento", order_by = Evento.id_evento, back_populates = "Olimpiada")
+Deporte.Evento = relationship("Evento", order_by = Evento.id_evento, back_populates = "Deporte")
+Deportista.Participacion = relationship("Participacion", back_populates="Deportista")
+Evento.Participacion = relationship("Participacion",  back_populates="Evento")
+Equipo.Participacion = relationship("Participacion",  back_populates="Equipo")

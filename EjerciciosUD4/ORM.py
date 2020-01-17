@@ -17,13 +17,16 @@ class Orm:
         c.menu1()
 
     def modificarMedallaDeportista(self):
-        pass
+        c = Conexion()
+        c.menu2()
 
     def anadirDeportistaParticipacion(self):
-        pass
+        c = Conexion()
+        c.menu3()
 
     def eliminarParticipacion(self):
-        pass
+        c = Conexion()
+        c.menu4()
 
 
 o = Orm()

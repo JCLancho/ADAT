@@ -57,3 +57,12 @@ class Conexion:
 
         session.close()
 
+    def menu2(self):
+        pass
+
+    def menu3(self):
+        pass
+
+    def menu4(self):
+        pass
+
