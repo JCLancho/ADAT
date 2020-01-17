@@ -58,7 +58,16 @@ class Conexion:
         session.close()
 
     def menu2(self):
-        pass
+        Session = sessionmaker(bind=self.engine)
+        session = Session()
+
+        patron = input("Introduce el nombre del deportista")
+        result = session.query(Deportista).filter(Deportista.nombre.like("%"+patron+"%"))
+        for deportista in result:
+            print(deportista)
+
+
+
 
     def menu3(self):
         pass
