@@ -3,6 +3,9 @@ from sqlalchemy import Integer, String, Column, Enum, ForeignKey
 from sqlalchemy.orm import relationship
 Base = declarative_base()
 
+# clase encargada de relacionar los elementos de la base de datos con los objetos
+# se mapea cada uno con su correspondiente, construyendo las relaciones
+
 
 class Deporte(Base):
     __tablename__ = 'Deporte'

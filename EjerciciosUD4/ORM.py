@@ -2,7 +2,7 @@ from EjerciciosUD4.Conexion import Conexion
 
 
 class Orm:
-
+    """Clase que gestiona y muestra el menu, llamando a los metodos correspondientes"""
     menu = """
     ¿Qué desea hacer?
         1.- Listado de deportistas participantes
