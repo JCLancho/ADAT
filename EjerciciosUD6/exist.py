@@ -46,3 +46,33 @@ conexion.removeDocument("gimnasio/cuotas_intermedias.xml")
 print("Cuotas finales calculadas correctamente")
 print("Se pueden consultar en la base de datos de exist, collecion 'gimansio'")
 
+
+# Modificacion de datos
+# cargo la consulta y la almaceno en una variable para poder ejecutarla
+file = open("ColeccionGimnasio/insert.xquery")
+insert = file.read()
+file.close()
+# ejecuto el insert
+conexion.executeQuery(insert)
+
+
+# cargo la consulta y la almaceno en una variable para poder ejecutarla
+file = open("ColeccionGimnasio/replace.xquery")
+replace = file.read()
+file.close()
+# ejecuto el replace
+conexion.executeQuery(replace)
+
+# cargo la consulta y la almaceno en una variable para poder ejecutarla
+file = open("ColeccionGimnasio/value.xquery")
+value = file.read()
+file.close()
+# ejecuto el value
+conexion.executeQuery(value)
+
+# cargo la consulta y la almaceno en una variable para poder ejecutarla
+file = open("ColeccionGimnasio/delete.xquery")
+delete = file.read()
+file.close()
+# ejecuto el delete
+conexion.executeQuery(delete)
